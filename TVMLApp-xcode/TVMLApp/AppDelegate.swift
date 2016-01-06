@@ -10,7 +10,7 @@ import UIKit
 import TVMLKit
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, TVApplicationControllerDelegate {
 
     var window: UIWindow?
     var appController: TVApplicationController?
@@ -25,6 +25,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window = UIWindow(frame: UIScreen.mainScreen().bounds)
         let appControllerContext = TVApplicationControllerContext()
+        
+        if let javascriptURL = NSURL(string: AppDelegate.TVBootURL) {
+            appControllerContext.javaScriptApplicationURL = javascriptURL
+            
+        }
+        
+        // this is how apple example code does it. I'm doing it because the javascript might use it too in the app.
+        appControllerContext.launchOptions["BASEURL"] = AppDelegate.TVBaseURL
+        appController = TVApplicationController(context: appControllerContext, window: window, delegate: self)
         
         return true
     }
@@ -50,6 +59,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
+    
+    // MARK: TVApplicationControllerDelegate. I just copied this from apple sample app.
+    
+    func appController(appController: TVApplicationController, didFinishLaunchingWithOptions options: [String: AnyObject]?) {
+        print("\(__FUNCTION__) invoked with options: \(options)")
+    }
+    
+    func appController(appController: TVApplicationController, didFailWithError error: NSError) {
+        print("\(__FUNCTION__) invoked with error: \(error)")
+        
+        let title = "Error Launching Application"
+        let message = error.localizedDescription
+        let alertController = UIAlertController(title: title, message: message, preferredStyle:.Alert )
+        
+        self.appController?.navigationController.presentViewController(alertController, animated: true, completion: { () -> Void in
+            // ...
+        })
+    }
+    
+    func appController(appController: TVApplicationController, didStopWithOptions options: [String: AnyObject]?) {
+        print("\(__FUNCTION__) invoked with options: \(options)")
+    }
+
 
 
 }
