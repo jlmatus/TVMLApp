@@ -15,7 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, TVApplicationControllerDe
     var window: UIWindow?
     var appController: TVApplicationController?
     
-    static let TVBaseURL = "http://localhost:9191/"
+    static let TVBaseURL = "http://localhost:8484/"
     // This is the bridge, TV aplication controller is going to use this boot URL to try to find and find where the javascript files are.
     static let TVBootURL = "\(AppDelegate.TVBaseURL)js/app.js"
 
