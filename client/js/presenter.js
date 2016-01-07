@@ -19,5 +19,20 @@ var Presenter = {
     load: function (event) {
         var self = this;
         var element = event.target;
+        
+//         adding this to play the video
+        
+        var videoURL = element.getAttribute("vidUrl");
+        
+        if (videoURL) {
+            var player = new Player();
+            var playlist = new Playlist();
+            var mediaItem = new MediaItem("video", videoURL);
+            
+            player.playlist = playlist;
+            player.playlist.push(mediaItem);
+            player.present();
+            
+        }
     }
 };

@@ -17,16 +17,15 @@ App.onLaunch = function(options) {
      */
     evaluateScripts(javascriptFiles, function(success) {
         if (success) {
-//            resourceLoader = new ResourceLoader(options.BASEURL);
-//
-//            var index = resourceLoader.loadResource(`${options.BASEURL}templates/tvmlapp.xml.js`,
-//                function(resource) {
-//                    var doc = Presenter.makeDocument(resource);
-//                    doc.addEventListener("select", Presenter.load.bind(Presenter));
-//                    navigationDocument.pushDocument(doc);
-//                });
-            var alert = createAlert("Hey this worked","Congrats!!");
-            navigationDocument.presentModal(alert);
+            resourceLoader = new ResourceLoader(options.BASEURL);
+
+            var index = resourceLoader.loadResource(`${options.BASEURL}templates/tvml.xml.js`,
+                function(resource) {
+                    var doc = Presenter.makeDocument(resource);
+                    doc.addEventListener("select", Presenter.load.bind(Presenter));
+                    navigationDocument.pushDocument(doc);
+                });
+           
             
         } else {
             /*
